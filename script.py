@@ -1,4 +1,5 @@
 import functools
+import sys
 
 #Program untuk mengkalkulasi cicilan dan mencari ongkos kirim paling minimum
 
@@ -41,7 +42,7 @@ class problem():
         print("=========== Program Minimal Biaya Transfer ==========")
         self.startingPoint = int(input("Masukkan biaya awal/biaya yang sudah dibayarkan (tanpa titik):Rp. "))
         self.goal = int(input("Masukkan harga yang akan dicicil (tanpa titik):Rp. "))
-        self.transferCost = int(input("Masukkan harga untuk sekali kirim:Rp. "))
+        self.transferCost = int(input("Masukkan ongkos untuk sekali kirim:Rp. "))
         print()
 
         self.actionCandidates = set()
@@ -59,7 +60,7 @@ class problem():
             else:
                 self.actionCandidates.add( int(action) )
     
-    def neighbors(self, state): # state == transferred
+    def neighbors(self, state): # state == transferred(int)
         candidate = []
         for action in self.actionCandidates:
             newAction = f"Rp.{action},00"
@@ -124,15 +125,13 @@ class problem():
 
         print("Berikut kesimpulan kami untuk meminimalisir ongkos kirim:")
         print(f"anda bisa mengambil cicilan {len(actions)} kali ({actions[0]}/transaksi)")
-        print(f"dengan ongkos kirim = Rp.{charges[-1]},00")
+        print(f"dengan total ongkos kirim = Rp.{charges[-1]},00")
         if excess > 0:
             print(f"kembalian di transaksi terakhir: Rp.{excess},00")
-            
-        
-        
 
-m = problem()
-m.solve()
-m.conclusions(True)
+
+p = problem()
+p.solve()
+p.conclusions(True if sys.argv[1] == "-a" or sys.argv[1] == "--Advanced" else False)
 
     
