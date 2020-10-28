@@ -111,10 +111,10 @@ class problem():
                     frontier.add(child)
         
     def conclusions(self, detailedMode=False):
+        actions, states, charges, excess = self.solution
         if detailedMode:
             print()
             print("advanced mode on...")
-            actions, states, charges, excess = self.solution
 
             for i, action in enumerate(actions):
                 print(f"{i}.[+{action}, paid={states[i]}, charges={charges[i]}]")
@@ -132,6 +132,9 @@ class problem():
 
 p = problem()
 p.solve()
-p.conclusions(True if sys.argv[1] == "-a" or sys.argv[1] == "--Advanced" else False)
+flag = False
+if len(sys.argv) > 1:
+    flag = "-a" in sys.argv
+p.conclusions(flag)
 
     
